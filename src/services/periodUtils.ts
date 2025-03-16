@@ -39,10 +39,10 @@ export const predictOvulation = (nextPeriodDate: Date): Date => {
 };
 
 // Calculate fertile window (typically 5 days before ovulation until 1 day after)
-export const calculateFertileWindow = (ovulationDate: Date): { from: Date, to: Date } => {
+export const calculateFertileWindow = (ovulationDate: Date): { start: Date, end: Date } => {
   return {
-    from: subDays(ovulationDate, 5),
-    to: addDays(ovulationDate, 1)
+    start: subDays(ovulationDate, 5),
+    end: addDays(ovulationDate, 1)
   };
 };
 

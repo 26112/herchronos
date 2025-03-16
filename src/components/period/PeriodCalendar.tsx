@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { CustomCalendar } from '@/components/ui/CustomCalendar';
 import { 
@@ -27,10 +26,8 @@ export const PeriodCalendar = () => {
   const periodDates = getCurrentPeriodDates();
   const { ovulationPrediction, fertileDays, nextPeriodPrediction } = userProfile;
 
-  // Convert fertileDays from {from, to} to {start, end} if it exists
-  const formattedFertileDays = fertileDays 
-    ? { start: fertileDays.from, end: fertileDays.to } 
-    : undefined;
+  // No conversion needed since fertileDays already has start and end properties
+  const formattedFertileDays = fertileDays;
 
   const handleMonthChange = (increment: number) => {
     setMonth(prev => addMonths(prev, increment));
