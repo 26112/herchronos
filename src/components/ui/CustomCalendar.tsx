@@ -25,7 +25,10 @@ function CustomCalendar({
     period: periodDates,
     ovulation: ovulationDate ? [ovulationDate] : [],
     fertile: fertileDays ? (date => 
-      fertileDays && isWithinInterval(date, fertileDays) && 
+      fertileDays && isWithinInterval(date, { 
+        start: fertileDays.start, 
+        end: fertileDays.end 
+      }) && 
       !isSameDay(date, ovulationDate || new Date())) : undefined,
   }
 
