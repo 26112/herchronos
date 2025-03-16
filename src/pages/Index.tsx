@@ -4,6 +4,7 @@ import { MainLayout } from '@/components/layout/Sidebar';
 import { CycleSummary } from '@/components/period/CycleSummary';
 import { PeriodCalendar } from '@/components/period/PeriodCalendar';
 import { TrackerForm } from '@/components/period/TrackerForm';
+import { AIChatbot } from '@/components/period/AIChatbot';
 import { usePeriod } from '@/providers/PeriodProvider';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -44,7 +45,18 @@ const Index = () => {
             <PeriodCalendar />
           </div>
           <div>
-            <TrackerForm />
+            <Tabs defaultValue="tracker">
+              <TabsList className="w-full mb-4">
+                <TabsTrigger value="tracker" className="flex-1">Track Today</TabsTrigger>
+                <TabsTrigger value="chat" className="flex-1">Ask PeriodPal</TabsTrigger>
+              </TabsList>
+              <TabsContent value="tracker">
+                <TrackerForm />
+              </TabsContent>
+              <TabsContent value="chat">
+                <AIChatbot />
+              </TabsContent>
+            </Tabs>
           </div>
         </div>
       </div>
