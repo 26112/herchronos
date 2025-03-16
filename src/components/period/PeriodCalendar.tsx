@@ -27,6 +27,11 @@ export const PeriodCalendar = () => {
   const periodDates = getCurrentPeriodDates();
   const { ovulationPrediction, fertileDays, nextPeriodPrediction } = userProfile;
 
+  // Convert fertileDays from {from, to} to {start, end} if it exists
+  const formattedFertileDays = fertileDays 
+    ? { start: fertileDays.from, end: fertileDays.to } 
+    : undefined;
+
   const handleMonthChange = (increment: number) => {
     setMonth(prev => addMonths(prev, increment));
   };
@@ -103,7 +108,7 @@ export const PeriodCalendar = () => {
             onMonthChange={setMonth}
             periodDates={periodDates}
             ovulationDate={ovulationPrediction}
-            fertileDays={fertileDays}
+            fertileDays={formattedFertileDays}
             showOutsideDays
             className="rounded-md"
           />

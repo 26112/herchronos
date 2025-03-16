@@ -37,5 +37,5 @@ export interface UserProfile {
   lastPeriodEnd?: Date;
   nextPeriodPrediction?: Date;
   ovulationPrediction?: Date;
-  fertileDays?: { from: Date, to: Date };
+  fertileDays?: { start: Date, end: Date };
 }

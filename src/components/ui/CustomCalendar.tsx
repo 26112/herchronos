@@ -9,7 +9,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react"
 export type CalendarProps = React.ComponentProps<typeof DayPicker> & {
   periodDates?: Date[]
   ovulationDate?: Date
-  fertileDays?: { from: Date, to: Date }
+  fertileDays?: { start: Date, end: Date }
 }
 
 function CustomCalendar({
