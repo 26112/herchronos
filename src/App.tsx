@@ -8,6 +8,13 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import { MainLayout } from "./components/layout/Sidebar";
 import { AIChatbot } from "./components/period/AIChatbot";
+import CalendarPage from "./pages/Calendar";
+import CycleHistory from "./pages/CycleHistory";
+import Symptoms from "./pages/Symptoms";
+import Mood from "./pages/Mood";
+import Health from "./pages/Health";
+import Insights from "./pages/Insights";
+import Resources from "./pages/Resources";
 
 const queryClient = new QueryClient();
 
@@ -29,6 +36,13 @@ const App = () => (
               </div>
             </MainLayout>
           } />
+          <Route path="/calendar" element={<CalendarPage />} />
+          <Route path="/history" element={<CycleHistory />} />
+          <Route path="/symptoms" element={<Symptoms />} />
+          <Route path="/mood" element={<Mood />} />
+          <Route path="/health" element={<Health />} />
+          <Route path="/insights" element={<Insights />} />
+          <Route path="/resources" element={<Resources />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
