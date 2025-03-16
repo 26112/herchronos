@@ -7,9 +7,9 @@ import { Button } from "@/components/ui/button"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 
 export type CalendarProps = React.ComponentProps<typeof DayPicker> & {
-  periodDates?: Date[]
-  ovulationDate?: Date
-  fertileDays?: { start: Date, end: Date }
+  periodDates?: Date[];
+  ovulationDate?: Date;
+  fertileDays?: { start: Date, end: Date };
 }
 
 function CustomCalendar({
@@ -24,12 +24,18 @@ function CustomCalendar({
   const modifiers = {
     period: periodDates,
     ovulation: ovulationDate ? [ovulationDate] : [],
-    fertile: fertileDays ? (date => 
-      fertileDays && isWithinInterval(date, { 
-        start: fertileDays.start, 
-        end: fertileDays.end 
-      }) && 
-      !isSameDay(date, ovulationDate || new Date())) : undefined,
+    fertile: fertileDays ? (date => {
+      if (!fertileDays) return false;
+      try {
+        return isWithinInterval(date, {
+          start: new Date(fertileDays.start),
+          end: new Date(fertileDays.end)
+        }) && !isSameDay(date, ovulationDate || new Date());
+      } catch (error) {
+        console.error("Error in fertile days calculation:", error);
+        return false;
+      }
+    }) : undefined,
   }
 
   const modifiersClassNames = {

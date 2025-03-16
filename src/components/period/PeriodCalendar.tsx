@@ -27,8 +27,13 @@ export const PeriodCalendar = () => {
   const periodDates = getCurrentPeriodDates();
   const { ovulationPrediction, fertileDays, nextPeriodPrediction } = userProfile;
 
-  // No conversion needed since fertileDays already has start and end properties
-  const formattedFertileDays = fertileDays;
+  // Add console.log to debug
+  console.log("Period Calendar Data:", {
+    periodDates,
+    ovulationPrediction,
+    fertileDays,
+    nextPeriodPrediction
+  });
 
   const handleMonthChange = (increment: number) => {
     setMonth(prev => addMonths(prev, increment));
@@ -104,24 +109,27 @@ export const PeriodCalendar = () => {
             mode="single"
             month={month}
             onMonthChange={setMonth}
-            periodDates={periodDates}
-            ovulationDate={ovulationPrediction}
-            fertileDays={formattedFertileDays}
+            periodDates={periodDates.map(date => new Date(date))}
+            ovulationDate={ovulationPrediction ? new Date(ovulationPrediction) : undefined}
+            fertileDays={fertileDays ? {
+              start: new Date(fertileDays.start),
+              end: new Date(fertileDays.end)
+            } : undefined}
             showOutsideDays
             className="rounded-md"
           />
           
           <div className="mt-4 flex justify-center space-x-6">
             <div className="flex items-center">
-              <div className="period-dot mr-2"></div>
+              <div className="h-3 w-3 rounded-full bg-periodpal-pink mr-2"></div>
               <span className="text-sm">Period</span>
             </div>
             <div className="flex items-center">
-              <div className="ovulation-dot mr-2"></div>
+              <div className="h-3 w-3 rounded-full bg-periodpal-accent mr-2"></div>
               <span className="text-sm">Ovulation</span>
             </div>
             <div className="flex items-center">
-              <div className="fertile-dot mr-2"></div>
+              <div className="h-3 w-3 rounded-full bg-periodpal-light mr-2"></div>
               <span className="text-sm">Fertile Window</span>
             </div>
           </div>
@@ -133,21 +141,21 @@ export const PeriodCalendar = () => {
             <div>
               <h4 className="font-medium">Next Period Expected</h4>
               <p className="text-sm text-gray-700">
-                Your next period is expected to start on {format(nextPeriodPrediction, 'EEEE, MMMM do')}
+                Your next period is expected to start on {format(new Date(nextPeriodPrediction), 'EEEE, MMMM do')}
               </p>
             </div>
           </div>
         )}
         
-        {ovulationPrediction && isSameMonth(ovulationPrediction, month) && (
+        {ovulationPrediction && isSameMonth(new Date(ovulationPrediction), month) && (
           <div className="mt-2 p-4 rounded-md bg-periodpal-accent/30 flex items-start space-x-3">
             <CalendarIcon className="h-5 w-5 text-periodpal-secondary mt-0.5" />
             <div>
               <h4 className="font-medium">Ovulation Day</h4>
               <p className="text-sm text-gray-700">
-                {isToday(ovulationPrediction) 
+                {isToday(new Date(ovulationPrediction)) 
                   ? "Today is your ovulation day"
-                  : `Your ovulation day is ${format(ovulationPrediction, 'EEEE, MMMM do')}`
+                  : `Your ovulation day is ${format(new Date(ovulationPrediction), 'EEEE, MMMM do')}`
                 }
               </p>
             </div>

@@ -11,7 +11,10 @@ export const calculateAverageCycleLength = (cycleHistory: CycleData[]): number =
     .reduce((acc, cycle, index, array) => {
       if (index < array.length - 1) {
         const nextCycle = array[index + 1];
-        const cycleDuration = differenceInDays(nextCycle.startDate, cycle.startDate);
+        const cycleDuration = differenceInDays(
+          new Date(nextCycle.startDate), 
+          new Date(cycle.startDate)
+        );
         return acc + cycleDuration;
       }
       return acc;
@@ -30,19 +33,19 @@ export const calculateAveragePeriodLength = (cycleHistory: CycleData[]): number 
 
 // Predict next period date
 export const predictNextPeriod = (lastPeriodStart: Date, averageCycleLength: number): Date => {
-  return addDays(lastPeriodStart, averageCycleLength);
+  return addDays(new Date(lastPeriodStart), averageCycleLength);
 };
 
 // Predict ovulation date (typically 14 days before the next period)
 export const predictOvulation = (nextPeriodDate: Date): Date => {
-  return subDays(nextPeriodDate, 14);
+  return subDays(new Date(nextPeriodDate), 14);
 };
 
 // Calculate fertile window (typically 5 days before ovulation until 1 day after)
 export const calculateFertileWindow = (ovulationDate: Date): { start: Date, end: Date } => {
   return {
-    start: subDays(ovulationDate, 5),
-    end: addDays(ovulationDate, 1)
+    start: subDays(new Date(ovulationDate), 5),
+    end: addDays(new Date(ovulationDate), 1)
   };
 };
 
@@ -52,8 +55,9 @@ export const generatePeriodDates = (
   periodLength: number
 ): Date[] => {
   const dates: Date[] = [];
+  const start = new Date(startDate);
   for (let i = 0; i < periodLength; i++) {
-    dates.push(addDays(startDate, i));
+    dates.push(addDays(start, i));
   }
   return dates;
 };
@@ -66,7 +70,7 @@ export const updatePredictions = (profile: UserProfile): UserProfile => {
   
   // Calculate next period date
   updatedProfile.nextPeriodPrediction = predictNextPeriod(
-    profile.lastPeriodStart, 
+    new Date(profile.lastPeriodStart), 
     profile.averageCycleLength
   );
   
