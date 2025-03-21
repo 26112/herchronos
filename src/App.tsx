@@ -16,40 +16,43 @@ import Health from "./pages/Health";
 import Insights from "./pages/Insights";
 import Resources from "./pages/Resources";
 import Settings from "./pages/Settings";
+import { ThemeProvider } from "./providers/ThemeProvider";
 
 const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/chat" element={
-            <MainLayout>
-              <div className="max-w-4xl mx-auto py-6">
-                <h1 className="text-3xl font-display font-bold text-periodpal-primary mb-6">
-                  Ask PeriodPal
-                </h1>
-                <AIChatbot />
-              </div>
-            </MainLayout>
-          } />
-          <Route path="/calendar" element={<CalendarPage />} />
-          <Route path="/history" element={<CycleHistory />} />
-          <Route path="/symptoms" element={<Symptoms />} />
-          <Route path="/mood" element={<Mood />} />
-          <Route path="/health" element={<Health />} />
-          <Route path="/insights" element={<Insights />} />
-          <Route path="/resources" element={<Resources />} />
-          <Route path="/settings" element={<Settings />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
+    <ThemeProvider>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/chat" element={
+              <MainLayout>
+                <div className="max-w-4xl mx-auto py-6">
+                  <h1 className="text-3xl font-display font-bold text-periodpal-primary mb-6">
+                    Ask PeriodPal
+                  </h1>
+                  <AIChatbot />
+                </div>
+              </MainLayout>
+            } />
+            <Route path="/calendar" element={<CalendarPage />} />
+            <Route path="/history" element={<CycleHistory />} />
+            <Route path="/symptoms" element={<Symptoms />} />
+            <Route path="/mood" element={<Mood />} />
+            <Route path="/health" element={<Health />} />
+            <Route path="/insights" element={<Insights />} />
+            <Route path="/resources" element={<Resources />} />
+            <Route path="/settings" element={<Settings />} />
+            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </TooltipProvider>
+    </ThemeProvider>
   </QueryClientProvider>
 );
 

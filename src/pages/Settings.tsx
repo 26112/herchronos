@@ -8,9 +8,33 @@ import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { usePeriod } from '@/providers/PeriodProvider';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { useTheme } from '@/providers/ThemeProvider';
+import { toast } from '@/components/ui/use-toast';
 
 const Settings = () => {
   const { userProfile, updateProfile } = usePeriod();
+  const { theme, toggleTheme } = useTheme();
+
+  const handleSaveProfile = () => {
+    toast({
+      title: "Profile Updated",
+      description: "Your profile settings have been saved successfully.",
+    });
+  };
+
+  const handleSaveNotifications = () => {
+    toast({
+      title: "Notification Preferences Updated",
+      description: "Your notification preferences have been saved.",
+    });
+  };
+
+  const handleSavePreferences = () => {
+    toast({
+      title: "Preferences Updated",
+      description: "Your app preferences have been saved successfully.",
+    });
+  };
 
   return (
     <MainLayout>
@@ -62,7 +86,7 @@ const Settings = () => {
                   />
                 </div>
                 
-                <Button className="mt-4">Save Changes</Button>
+                <Button className="mt-4" onClick={handleSaveProfile}>Save Changes</Button>
               </CardContent>
             </Card>
           </TabsContent>
@@ -106,7 +130,7 @@ const Settings = () => {
                   <Switch />
                 </div>
                 
-                <Button className="mt-4">Save Preferences</Button>
+                <Button className="mt-4" onClick={handleSaveNotifications}>Save Preferences</Button>
               </CardContent>
             </Card>
           </TabsContent>
@@ -122,12 +146,21 @@ const Settings = () => {
               <CardContent className="space-y-4">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="font-medium">Dark Mode</p>
+                    <p className="font-medium">Theme Mode</p>
                     <p className="text-sm text-muted-foreground">
-                      Toggle between light and dark themes
+                      Choose between light and dark theme
                     </p>
                   </div>
-                  <Switch />
+                  <div className="flex items-center space-x-2">
+                    <Label htmlFor="theme-toggle">
+                      {theme === 'light' ? 'Light' : 'Dark'}
+                    </Label>
+                    <Switch 
+                      id="theme-toggle" 
+                      checked={theme === 'dark'}
+                      onCheckedChange={toggleTheme}
+                    />
+                  </div>
                 </div>
                 
                 <div className="flex items-center justify-between">
@@ -154,7 +187,7 @@ const Settings = () => {
                   <Switch defaultChecked />
                 </div>
                 
-                <Button className="mt-4">Save Settings</Button>
+                <Button className="mt-4" onClick={handleSavePreferences}>Save Settings</Button>
               </CardContent>
             </Card>
           </TabsContent>
