@@ -15,6 +15,7 @@ import Mood from "./pages/Mood";
 import Health from "./pages/Health";
 import Insights from "./pages/Insights";
 import Resources from "./pages/Resources";
+import Settings from "./pages/Settings";
 
 const queryClient = new QueryClient();
 
@@ -43,6 +44,7 @@ const App = () => (
           <Route path="/health" element={<Health />} />
           <Route path="/insights" element={<Insights />} />
           <Route path="/resources" element={<Resources />} />
+          <Route path="/settings" element={<Settings />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
