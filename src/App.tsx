@@ -33,7 +33,7 @@ const App = () => (
               <MainLayout>
                 <div className="max-w-4xl mx-auto py-6">
                   <h1 className="text-3xl font-display font-bold text-periodpal-primary mb-6">
-                    Ask PeriodPal
+                    Ask HerChronos
                   </h1>
                   <AIChatbot />
                 </div>

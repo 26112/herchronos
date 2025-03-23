@@ -74,7 +74,7 @@ export function AppSidebar() {
       icon: ScrollText,
     },
     {
-      title: "Ask PeriodPal",
+      title: "Ask HerChronos",
       url: "/chat",
       icon: MessageSquare,
     },
@@ -85,7 +85,7 @@ export function AppSidebar() {
       <SidebarHeader className="flex items-center justify-center p-4">
         <Link to="/" className="flex items-center space-x-2">
           <Droplets className="h-6 w-6 text-periodpal-primary" />
-          <span className="text-xl font-display font-semibold text-periodpal-primary">PeriodPal</span>
+          <span className="text-xl font-display font-semibold text-periodpal-primary">HerChronos</span>
         </Link>
       </SidebarHeader>
       <SidebarContent>

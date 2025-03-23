@@ -1,9 +1,9 @@
 
-# PeriodPal: Your Personal Period Health Companion
+# HerChronos: Your Personal Period Health Companion
 
 ## Project Synopsis
 
-PeriodPal is a comprehensive menstrual cycle tracking and health management application designed to help users monitor, understand, and optimize their reproductive health. The application offers a user-friendly interface with personalized insights and educational resources.
+HerChronos is a comprehensive menstrual cycle tracking and health management application designed to help users monitor, understand, and optimize their reproductive health. The application offers a user-friendly interface with personalized insights and educational resources.
 
 ### Key Features
 
@@ -11,7 +11,7 @@ PeriodPal is a comprehensive menstrual cycle tracking and health management appl
 - **Health Insights**: Receive personalized insights based on your cycle data and symptoms
 - **Mood Tracking**: Record and analyze mood changes throughout your cycle
 - **Symptom Management**: Track various symptoms and their correlation with cycle phases
-- **AI Assistant**: Ask questions and receive information about menstrual health from our PeriodPal AI chatbot
+- **AI Assistant**: Ask questions and receive information about menstrual health from our HerChronos AI chatbot
 - **Educational Resources**: Access a library of articles and resources about reproductive health
 - **Dark/Light Mode**: Customize your viewing experience with theme options
 - **Privacy-Focused**: All your sensitive health data remains local and private

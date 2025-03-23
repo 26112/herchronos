@@ -16,7 +16,7 @@ type Message = {
 };
 
 const mockResponses: Record<string, string> = {
-  default: "I'm PeriodPal, your personal period assistant. I can help answer questions about menstrual health, cycle tracking, and more. How can I help you today?",
+  default: "I'm HerChronos, your personal period assistant. I can help answer questions about menstrual health, cycle tracking, and more. How can I help you today?",
   greeting: "Hello! I'm here to help with any questions about your menstrual cycle, symptoms, or reproductive health.",
   period: "A typical menstrual cycle lasts 28 days, but can range from 21 to 35 days. The bleeding phase usually lasts 2-7 days. Everyone's cycle is unique!",
   pain: "Menstrual cramps are caused by your uterus contracting to help shed its lining. For relief, try a heating pad, gentle exercise, over-the-counter pain relievers, or relaxation techniques. If pain is severe, please consult your healthcare provider.",
@@ -60,7 +60,7 @@ export const AIChatbot = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
-      content: "Hi there! I'm PeriodPal, your personal period health assistant. You can ask me questions about menstrual health, cycle tracking, symptoms, or reproductive wellness. How can I help you today?",
+      content: "Hi there! I'm HerChronos, your personal period health assistant. You can ask me questions about menstrual health, cycle tracking, symptoms, or reproductive wellness. How can I help you today?",
       role: 'assistant',
       timestamp: new Date(),
     },
@@ -113,7 +113,7 @@ export const AIChatbot = () => {
   return (
     <Card className="w-full h-[600px] flex flex-col">
       <CardHeader>
-        <CardTitle className="text-2xl font-display">Ask PeriodPal</CardTitle>
+        <CardTitle className="text-2xl font-display">Ask HerChronos</CardTitle>
       </CardHeader>
       <CardContent className="flex-1 overflow-hidden">
         <ScrollArea className="h-[calc(600px-8rem)]" ref={scrollAreaRef}>
@@ -129,7 +129,7 @@ export const AIChatbot = () => {
                 <div className="flex items-start gap-3 max-w-[80%]">
                   {message.role === 'assistant' && (
                     <Avatar>
-                      <AvatarFallback className="bg-periodpal-primary text-white">PP</AvatarFallback>
+                      <AvatarFallback className="bg-periodpal-primary text-white">HC</AvatarFallback>
                     </Avatar>
                   )}
                   <div
@@ -154,7 +154,7 @@ export const AIChatbot = () => {
               <div className="flex justify-start">
                 <div className="flex items-start gap-3 max-w-[80%]">
                   <Avatar>
-                    <AvatarFallback className="bg-periodpal-primary text-white">PP</AvatarFallback>
+                    <AvatarFallback className="bg-periodpal-primary text-white">HC</AvatarFallback>
                   </Avatar>
                   <div className="rounded-lg p-3 bg-muted">
                     <div className="flex space-x-1">

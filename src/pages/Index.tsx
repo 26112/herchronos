@@ -32,7 +32,7 @@ const Index = () => {
       <div className="max-w-6xl mx-auto">
         <div className="mb-8">
           <h1 className="text-3xl font-display font-bold text-periodpal-primary mb-2">
-            Welcome to PeriodPal
+            Welcome to HerChronos
           </h1>
           <p className="text-muted-foreground">
             Track your cycle, monitor symptoms, and gain insights about your menstrual health
@@ -48,7 +48,7 @@ const Index = () => {
             <Tabs defaultValue="tracker">
               <TabsList className="w-full mb-4">
                 <TabsTrigger value="tracker" className="flex-1">Track Today</TabsTrigger>
-                <TabsTrigger value="chat" className="flex-1">Ask PeriodPal</TabsTrigger>
+                <TabsTrigger value="chat" className="flex-1">Ask HerChronos</TabsTrigger>
               </TabsList>
               <TabsContent value="tracker">
                 <TrackerForm />
