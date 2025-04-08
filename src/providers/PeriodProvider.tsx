@@ -1,10 +1,10 @@
-
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import { UserProfile, CycleData, Mood, Symptom } from '@/types/period';
 import useLocalStorage from '@/hooks/useLocalStorage';
 import { generateMockProfile, updatePredictions } from '@/services/periodUtils';
 import { addDays, format } from 'date-fns';
 import { toast } from '@/hooks/use-toast';
+import { initDatabase, saveUserProfile, getUserProfile } from '@/services/databaseService';
 
 interface PeriodContextType {
   userProfile: UserProfile;
@@ -25,18 +25,32 @@ export const PeriodProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Simulate loading data
-    setTimeout(() => setIsLoading(false), 800);
+    const setupDatabase = async () => {
+      const dbInitialized = await initDatabase();
+      
+      if (dbInitialized) {
+        const dbProfile = await getUserProfile();
+        
+        if (dbProfile) {
+          setUserProfile(dbProfile);
+        } 
+        else {
+          await saveUserProfile(userProfile);
+        }
+      }
+      
+      setIsLoading(false);
+    };
+    
+    setupDatabase();
   }, []);
 
-  // Schedule notifications for upcoming period
   useEffect(() => {
     if (userProfile.nextPeriodPrediction) {
       const nextPeriod = new Date(userProfile.nextPeriodPrediction);
       const today = new Date();
       const threeDaysBefore = addDays(nextPeriod, -3);
       
-      // If three days before next period, show notification
       if (format(today, 'yyyy-MM-dd') === format(threeDaysBefore, 'yyyy-MM-dd')) {
         toast({
           title: "Period Reminder",
@@ -50,6 +64,7 @@ export const PeriodProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   const updateProfile = (data: Partial<UserProfile>) => {
     setUserProfile((prev) => {
       const updatedProfile = { ...prev, ...data };
+      saveUserProfile(updatedProfile);
       return updatePredictions(updatedProfile);
     });
   };
@@ -68,13 +83,14 @@ export const PeriodProvider: React.FC<{ children: React.ReactNode }> = ({ childr
         lastPeriodEnd: cycle.endDate,
       };
       
-      return updatePredictions(updatedProfile);
+      const finalProfile = updatePredictions(updatedProfile);
+      saveUserProfile(finalProfile);
+      return finalProfile;
     });
   };
 
   const addMood = (mood: Mood) => {
     setUserProfile((prev) => {
-      // Find the current cycle to add the mood to
       const updatedCycleHistory = [...prev.cycleHistory];
       const currentCycleIndex = updatedCycleHistory.length - 1;
       
@@ -84,16 +100,18 @@ export const PeriodProvider: React.FC<{ children: React.ReactNode }> = ({ childr
         updatedCycleHistory[currentCycleIndex] = currentCycle;
       }
       
-      return {
+      const updatedProfile = {
         ...prev,
         cycleHistory: updatedCycleHistory,
       };
+      
+      saveUserProfile(updatedProfile);
+      return updatedProfile;
     });
   };
 
   const addSymptom = (symptom: Symptom) => {
     setUserProfile((prev) => {
-      // Find the current cycle to add the symptom to
       const updatedCycleHistory = [...prev.cycleHistory];
       const currentCycleIndex = updatedCycleHistory.length - 1;
       
@@ -103,10 +121,13 @@ export const PeriodProvider: React.FC<{ children: React.ReactNode }> = ({ childr
         updatedCycleHistory[currentCycleIndex] = currentCycle;
       }
       
-      return {
+      const updatedProfile = {
         ...prev,
         cycleHistory: updatedCycleHistory,
       };
+      
+      saveUserProfile(updatedProfile);
+      return updatedProfile;
     });
   };
 
@@ -132,6 +153,7 @@ export const PeriodProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     try {
       const parsedData = JSON.parse(data);
       setUserProfile(parsedData);
+      saveUserProfile(parsedData);
       return true;
     } catch (error) {
       console.error('Failed to import data:', error);
