@@ -14,6 +14,8 @@ interface PeriodContextType {
   addMood: (mood: Mood) => void;
   addSymptom: (symptom: Symptom) => void;
   getCurrentPeriodDates: () => Date[];
+  exportData: () => string;
+  importData: (data: string) => boolean;
 }
 
 const PeriodContext = createContext<PeriodContextType | undefined>(undefined);
@@ -122,6 +124,21 @@ export const PeriodProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     return dates;
   };
 
+  const exportData = (): string => {
+    return JSON.stringify(userProfile);
+  };
+
+  const importData = (data: string): boolean => {
+    try {
+      const parsedData = JSON.parse(data);
+      setUserProfile(parsedData);
+      return true;
+    } catch (error) {
+      console.error('Failed to import data:', error);
+      return false;
+    }
+  };
+
   return (
     <PeriodContext.Provider
       value={{
@@ -132,6 +149,8 @@ export const PeriodProvider: React.FC<{ children: React.ReactNode }> = ({ childr
         addMood,
         addSymptom,
         getCurrentPeriodDates,
+        exportData,
+        importData,
       }}
     >
       {children}

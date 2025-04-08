@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { MainLayout } from '@/components/layout/Sidebar';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -10,10 +10,12 @@ import { usePeriod } from '@/providers/PeriodProvider';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useTheme } from '@/providers/ThemeProvider';
 import { toast } from '@/components/ui/use-toast';
+import { Textarea } from '@/components/ui/textarea';
 
 const Settings = () => {
-  const { userProfile, updateProfile } = usePeriod();
+  const { userProfile, updateProfile, exportData, importData } = usePeriod();
   const { theme, toggleTheme } = useTheme();
+  const [importValue, setImportValue] = useState('');
 
   const handleSaveProfile = () => {
     toast({
@@ -36,6 +38,54 @@ const Settings = () => {
     });
   };
 
+  const handleExportData = () => {
+    const dataStr = exportData();
+    const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+    
+    const exportFileDefaultName = 'herchronos-data.json';
+    
+    const linkElement = document.createElement('a');
+    linkElement.setAttribute('href', dataUri);
+    linkElement.setAttribute('download', exportFileDefaultName);
+    linkElement.click();
+    
+    toast({
+      title: "Data Exported",
+      description: "Your data has been exported successfully.",
+    });
+  };
+
+  const handleImportData = () => {
+    if (!importValue.trim()) {
+      toast({
+        title: "Import Failed",
+        description: "Please paste your data first.",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    try {
+      const success = importData(importValue);
+      
+      if (success) {
+        toast({
+          title: "Data Imported",
+          description: "Your data has been imported successfully.",
+        });
+        setImportValue('');
+      } else {
+        throw new Error("Import failed");
+      }
+    } catch (error) {
+      toast({
+        title: "Import Failed",
+        description: "Invalid data format. Please check your data and try again.",
+        variant: "destructive",
+      });
+    }
+  };
+
   return (
     <MainLayout>
       <div className="max-w-4xl mx-auto">
@@ -51,6 +101,7 @@ const Settings = () => {
             <TabsTrigger value="profile">Profile</TabsTrigger>
             <TabsTrigger value="notifications">Notifications</TabsTrigger>
             <TabsTrigger value="preferences">Preferences</TabsTrigger>
+            <TabsTrigger value="data">Data Management</TabsTrigger>
           </TabsList>
 
           <TabsContent value="profile">
@@ -188,6 +239,40 @@ const Settings = () => {
                 </div>
                 
                 <Button className="mt-4" onClick={handleSavePreferences}>Save Settings</Button>
+              </CardContent>
+            </Card>
+          </TabsContent>
+          
+          <TabsContent value="data">
+            <Card>
+              <CardHeader>
+                <CardTitle>Data Management</CardTitle>
+                <CardDescription>
+                  Export or import your data
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div>
+                  <h3 className="text-lg font-medium mb-2">Export Data</h3>
+                  <p className="text-sm text-muted-foreground mb-3">
+                    Download all your data to keep a backup or transfer to another device
+                  </p>
+                  <Button onClick={handleExportData}>Export Data</Button>
+                </div>
+                
+                <div>
+                  <h3 className="text-lg font-medium mb-2">Import Data</h3>
+                  <p className="text-sm text-muted-foreground mb-3">
+                    Paste your exported data below to restore your information
+                  </p>
+                  <Textarea 
+                    placeholder="Paste your exported data here..."
+                    className="min-h-[100px] mb-3"
+                    value={importValue}
+                    onChange={(e) => setImportValue(e.target.value)}
+                  />
+                  <Button onClick={handleImportData}>Import Data</Button>
+                </div>
               </CardContent>
             </Card>
           </TabsContent>
