@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { MainLayout } from '@/components/layout/Sidebar';
 import { CycleSummary } from '@/components/period/CycleSummary';
@@ -37,6 +36,15 @@ const Index = () => {
           <p className="text-muted-foreground">
             Track your cycle, monitor symptoms, and gain insights about your menstrual health
           </p>
+          <div className="mt-6">
+            <span className="text-sm text-muted-foreground">New here?</span>{" "}
+            <a
+              href="/register"
+              className="text-periodpal-primary underline font-medium hover:text-periodpal-primary/90"
+            >
+              Register
+            </a>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -19,6 +18,7 @@ import Resources from "./pages/Resources";
 import Settings from "./pages/Settings";
 import { ThemeProvider } from "./providers/ThemeProvider";
 import { initDatabase } from "./services/databaseService";
+import Register from "./pages/Register";
 
 const queryClient = new QueryClient();
 
@@ -43,6 +43,7 @@ const App = () => {
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<Index />} />
+              <Route path="/register" element={<Register />} />
               <Route path="/chat" element={
                 <MainLayout>
                   <div className="max-w-4xl mx-auto py-6">
@@ -61,7 +62,6 @@ const App = () => {
               <Route path="/insights" element={<Insights />} />
               <Route path="/resources" element={<Resources />} />
               <Route path="/settings" element={<Settings />} />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>
