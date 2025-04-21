@@ -19,11 +19,11 @@ import Settings from "./pages/Settings";
 import { ThemeProvider } from "./providers/ThemeProvider";
 import { initDatabase } from "./services/databaseService";
 import Register from "./pages/Register";
+import { ProtectedRoute } from "./components/ProtectedRoute";
 
 const queryClient = new QueryClient();
 
 const App = () => {
-  // Initialize the database when the app starts
   useEffect(() => {
     initDatabase().then(success => {
       if (success) {
@@ -42,26 +42,38 @@ const App = () => {
           <Sonner />
           <BrowserRouter>
             <Routes>
-              <Route path="/" element={<Index />} />
               <Route path="/register" element={<Register />} />
-              <Route path="/chat" element={
-                <MainLayout>
-                  <div className="max-w-4xl mx-auto py-6">
-                    <h1 className="text-3xl font-display font-bold text-periodpal-primary mb-6">
-                      Ask HerChronos
-                    </h1>
-                    <AIChatbot />
-                  </div>
-                </MainLayout>
-              } />
-              <Route path="/calendar" element={<CalendarPage />} />
-              <Route path="/history" element={<CycleHistory />} />
-              <Route path="/symptoms" element={<Symptoms />} />
-              <Route path="/mood" element={<Mood />} />
-              <Route path="/health" element={<Health />} />
-              <Route path="/insights" element={<Insights />} />
-              <Route path="/resources" element={<Resources />} />
-              <Route path="/settings" element={<Settings />} />
+              <Route 
+                path="/" 
+                element={
+                  <ProtectedRoute>
+                    <Index />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/chat" 
+                element={
+                  <ProtectedRoute>
+                    <MainLayout>
+                      <div className="max-w-4xl mx-auto py-6">
+                        <h1 className="text-3xl font-display font-bold text-periodpal-primary mb-6">
+                          Ask HerChronos
+                        </h1>
+                        <AIChatbot />
+                      </div>
+                    </MainLayout>
+                  </ProtectedRoute>
+                } 
+              />
+              <Route path="/calendar" element={<ProtectedRoute><CalendarPage /></ProtectedRoute>} />
+              <Route path="/history" element={<ProtectedRoute><CycleHistory /></ProtectedRoute>} />
+              <Route path="/symptoms" element={<ProtectedRoute><Symptoms /></ProtectedRoute>} />
+              <Route path="/mood" element={<ProtectedRoute><Mood /></ProtectedRoute>} />
+              <Route path="/health" element={<ProtectedRoute><Health /></ProtectedRoute>} />
+              <Route path="/insights" element={<ProtectedRoute><Insights /></ProtectedRoute>} />
+              <Route path="/resources" element={<ProtectedRoute><Resources /></ProtectedRoute>} />
+              <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>
