@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -36,8 +37,8 @@ const App = () => {
     document.addEventListener('backbutton', handleBackButton, false);
 
     const isCapacitor = window.matchMedia('(display-mode: standalone)').matches || 
-                        window.navigator.standalone || 
-                        window.location.href.includes('?forceHideBadge=true');
+                        // Type-safe check for standalone mode
+                        !!(window.navigator as any).standalone;
     
     if (isCapacitor) {
       document.documentElement.classList.add('capacitor-app');
