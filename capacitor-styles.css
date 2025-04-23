@@ -1,0 +1,52 @@
+
+/* Capacitor-specific styles */
+.capacitor-app {
+  /* Prevent text selection */
+  -webkit-user-select: none;
+  user-select: none;
+  
+  /* Prevent touch callout */
+  -webkit-touch-callout: none;
+  
+  /* Prevent content zooming */
+  touch-action: pan-y;
+  
+  /* Hide scrollbars but keep functionality */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.capacitor-app::-webkit-scrollbar {
+  display: none;
+}
+
+/* Safe area padding for iOS notches */
+.capacitor-app .safe-area-top {
+  padding-top: env(safe-area-inset-top);
+}
+
+.capacitor-app .safe-area-bottom {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* Add tap highlight color */
+.capacitor-app a, 
+.capacitor-app button {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+/* Make active states clearer for touch */
+@media (hover: none) {
+  .capacitor-app button:active,
+  .capacitor-app a:active {
+    opacity: 0.7;
+  }
+}
+
+/* Status bar style for iOS */
+@supports (-webkit-touch-callout: none) {
+  .capacitor-app {
+    /* Padding for status bar */
+    padding-top: env(safe-area-inset-top);
+  }
+}

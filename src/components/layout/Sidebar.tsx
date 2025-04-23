@@ -28,9 +28,11 @@ import {
 } from "lucide-react"
 import { Link, useLocation } from "react-router-dom"
 import { Button } from "@/components/ui/button"
+import { useIsMobile } from "@/hooks/use-mobile"
 
 export function AppSidebar() {
   const location = useLocation()
+  const isMobile = useIsMobile()
 
   const menuItems = [
     {
@@ -81,7 +83,7 @@ export function AppSidebar() {
   ]
 
   return (
-    <Sidebar>
+    <Sidebar className={isMobile ? "max-w-[85vw]" : ""}>
       <SidebarHeader className="flex items-center justify-center p-4">
         <Link to="/" className="flex items-center space-x-2">
           <Droplets className="h-6 w-6 text-periodpal-primary" />
@@ -120,11 +122,13 @@ export function AppSidebar() {
 }
 
 export function MainLayout({ children }: { children: React.ReactNode }) {
+  const isMobile = useIsMobile()
+  
   return (
     <SidebarProvider>
       <div className="min-h-screen flex w-full">
         <AppSidebar />
-        <main className="flex-1 p-6 overflow-y-auto">
+        <main className={`flex-1 ${isMobile ? 'p-4' : 'p-6'} overflow-y-auto`}>
           <div className="lg:hidden flex justify-end mb-4">
             <SidebarTrigger />
           </div>

@@ -32,7 +32,30 @@ const App = () => {
         console.error("Failed to initialize database");
       }
     });
+
+    document.addEventListener('backbutton', handleBackButton, false);
+
+    const isCapacitor = window.matchMedia('(display-mode: standalone)').matches || 
+                        window.navigator.standalone || 
+                        window.location.href.includes('?forceHideBadge=true');
+    
+    if (isCapacitor) {
+      document.documentElement.classList.add('capacitor-app');
+      document.body.style.overscrollBehavior = 'none';
+    }
+
+    return () => {
+      document.removeEventListener('backbutton', handleBackButton);
+    };
   }, []);
+
+  const handleBackButton = () => {
+    const { pathname } = window.location;
+    if (pathname === '/') {
+      return false;
+    }
+    return true;
+  };
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -56,8 +79,8 @@ const App = () => {
                 element={
                   <ProtectedRoute>
                     <MainLayout>
-                      <div className="max-w-4xl mx-auto py-6">
-                        <h1 className="text-3xl font-display font-bold text-periodpal-primary mb-6">
+                      <div className="max-w-4xl mx-auto py-4 md:py-6">
+                        <h1 className="text-2xl md:text-3xl font-display font-bold text-periodpal-primary mb-4 md:mb-6">
                           Ask HerChronos
                         </h1>
                         <AIChatbot />
